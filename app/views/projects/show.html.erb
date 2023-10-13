@@ -1,0 +1,39 @@
+<h1><%= @project.name %></h1>
+
+<p><%= @project.description %></p>
+
+<ul>
+    <li><%= link_to "Edit", edit_project_path(@project) %></li>
+    <li><%= link_to "Destroy", project_path(@project), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %></li>
+</ul>
+
+<h2>Tasks</h2>
+<% @project.tasks.each do |task| %>
+  <p>
+    <strong>Description:</strong>
+    <%= task.description %>
+  </p>
+
+  <p>
+    <strong>Task:</strong>
+    <%= task.due_at %>
+  </p>
+<% end %>
+
+<h2>Add a task:</h2>
+<%= form_with model: [ @project, @project.tasks.build ] do |form| %>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_field :description %>
+  </p>
+  <p>
+    <%= form.label :due_at %><br>
+    <%= form.text_area :due_at %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
